@@ -3,20 +3,13 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Instalar Dependências') {
             steps {
-                bat 'npm install -g yarn'
-                bat 'yarn'
+                bat 'yarn install --network-timeout 600000'
             }
         }
 
-        stage('Instalar Browsers Playwright') {
+        stage('Instalar Browsers') {
             steps {
                 bat 'npx playwright install'
             }
