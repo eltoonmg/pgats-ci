@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Instalar Dependências') {
+            steps {
+                bat 'npm install -g yarn'
+                bat 'yarn'
+            }
+        }
+
+        stage('Instalar Browsers Playwright') {
+            steps {
+                bat 'npx playwright install'
+            }
+        }
+
+        stage('Executar Testes') {
+            steps {
+                bat 'yarn run e2e'
+            }
+        }
+    }
+}
