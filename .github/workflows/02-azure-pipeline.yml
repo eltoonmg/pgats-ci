@@ -10,11 +10,20 @@ steps:
   inputs:
     versionSpec: '24.x'
 
-- script: |
-    npm install -g yarn
-    yarn
-    npx playwright install --with-deps
+- script: npm install -g yarn
+  displayName: 'Instalar Yarn'
+
+- script: yarn install --network-timeout 600000
   displayName: 'Instalar dependências'
+
+- script: npx playwright install
+  displayName: 'Instalar Browsers'
 
 - script: yarn run e2e
   displayName: 'Executar testes'
+
+- task: PublishPipelineArtifact@1
+  condition: always()
+  inputs:
+    targetPath: 'playwright-report'
+    artifact: 'playwright-report'
