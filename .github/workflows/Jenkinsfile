@@ -1,10 +1,12 @@
 pipeline {
-    agent any
+    agent {
+        label 'windows'
+    }
 
     stages {
-
         stage('Instalar Dependências') {
             steps {
+                bat 'npm install -g yarn'
                 bat 'yarn install --network-timeout 600000'
             }
         }
@@ -21,6 +23,7 @@ pipeline {
             }
         }
     }
+
     post {
         always {
             publishHTML([
