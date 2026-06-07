@@ -16,47 +16,7 @@ steps:
     npx playwright install
   displayName: 'Instalar dependências'
 
-- script: yarn run e2e
+- script: |
+    yarn run e2e
   displayName: 'Executar testes'
   continueOnError: true
-
-- script: |
-    echo ===== Diretório atual =====
-    cd
-
-    echo ===== Procurando test-results =====
-    if exist test-results (
-      dir test-results /s
-    ) else (
-      echo Pasta test-results nao encontrada
-    )
-
-    echo ===== Procurando playwright-report =====
-    if exist playwright-report (
-      dir playwright-report /s
-    ) else (
-      echo Pasta playwright-report nao encontrada
-    )
-
-    echo ===== Procurando results.xml =====
-    if exist results.xml (
-      dir results.xml
-    ) else (
-      echo results.xml nao encontrado
-    )
-  displayName: 'Verificar artefatos'
-  condition: always()
-
-- task: PublishPipelineArtifact@1
-  condition: always()
-  continueOnError: true
-  inputs:
-    targetPath: 'test-results'
-    artifact: 'test-results'
-
-- task: PublishPipelineArtifact@1
-  condition: always()
-  continueOnError: true
-  inputs:
-    targetPath: 'playwright-report'
-    artifact: 'playwright-report'
